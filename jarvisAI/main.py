@@ -1,17 +1,99 @@
-import win32com.client
 import datetime
-from speech_to_speech import speaker
+import os
+import speech_recognition as sr
+import win32com.client
+import webbrowser
+import google.generativeai as genai
 
-speacker = win32com.client.Dispatch("SAPI.SpVoice")
-def wishMe():
-    hour = int(datetime.datetime.now().hour)
-    if hour>=0 and hour<12:
-        speaker.Speak('Good Morning Sir')
-    elif hour>=12 and hour<18:
-        speaker.Speak('Good Afternoon sir')
-    else:
-        speaker.Speak('Good Evening sir')
-while 1:
-    print("enter text")
-    s = input()
-    speacker.Speak(s)
+
+
+speaker = win32com.client.Dispatch("SAPI.SpVoice")
+
+def AI(prompt):
+    genai.configure(api_key="AIzaSyDR8h-0OR_zgHqO_ZunKzxjV-WdRyoQHZY")
+
+    # Create the model
+    generation_config = {
+        "temperature": 1,
+        "top_p": 0.95,
+        "top_k": 40,
+        "max_output_tokens": 8192,
+        "response_mime_type": "text/plain",
+    }
+
+    model = genai.GenerativeModel(
+        model_name="gemini-1.5-flash",
+        generation_config=generation_config,
+    )
+
+    chat_session = model.start_chat(
+        history=[
+
+        ])
+    # f"{''.join(prompt.split('Jarvis')[1:])}"
+    response = chat_session.send_message(f"{''.join(prompt.split('Jarvis')[1:])}")
+    print(prompt)
+    print(response.text)
+    speaker.Speak(response.text)
+
+
+def takeCommand():
+    r = sr.Recognizer()
+    
+    with sr.Microphone() as source:
+        r.pause_threshold = 1
+        audio = r.listen(source)
+        try:
+            print("Recognizing...")
+            query = r.recognize_google(audio, language="en-in")
+            print(f"User said: {query}")
+            return query
+        except Exception as e:
+            print("Please say something.")
+            return "please say something"
+
+speaker.Speak("I am Jarvis AI")
+while True:
+    print("Listening...")
+    s = takeCommand()
+    speaker.Speak(s)
+
+    if s == "shutdown":
+        speaker.Speak("Goodbye, Sir")
+        break
+
+
+
+    filepath = [["Hitachi video", r"C:\Users\Tirth\Downloads\itachi.mp4"],
+                ["vs code",r"C:\Users\Tirth\AppData\Local\Programs\Microsoft VS Code\code.exe"],
+                ["my picture",r"D:\code\wallpaper\2.jpg"],
+                ["camera",r"C:\Users\Tirth\Desktop\Camera.lnk"]]
+
+    for path in filepath:
+        if f"open {path[0]}".lower() in s.lower():
+            speaker.Speak(f"opening {path[0]} for you sir...........")
+            os.startfile(path[1])
+
+    sites = [["youtube", "https://www.youtube.com"],
+             ["github", "https://github.com"],["instagram", "https://instagram.com"],
+             ["chrome browser","https://www.google.com/"],
+             ["brave browser",r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"]]
+    for site in sites:
+        if f"open {site[0]}".lower() in s.lower():
+            speaker.Speak(f"Opening {site[0]} sir...")
+            webbrowser.open(site[1])
+
+    if "the time" in s.lower():
+            time = datetime.datetime.now().strftime("%H:%M")
+            print(time)
+            speaker.Speak(time)
+
+    if "who invented you"  "who create you" in s:
+        print("i am invented by TIRTH SONIGARA")
+        speaker.Speak(" i am invented by TIRTHSONIGARA")
+
+    if "hello Jarvis".lower() in s.lower():
+        AI(prompt=s)
+
+
+
