@@ -1,0 +1,83 @@
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+@app.route('/data', methods=['GET'])
+def get_data():
+    data = {"message": "Hello from Python!"}
+    return jsonify(data)
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
+//////////////////////////////////////////////////////////////////
+flutter code
+
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text("Flutter - Python API")),
+        body: Center(
+          child: FutureBuilder(
+            future: fetchData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return Text('Response: ${snapshot.data}');
+              }
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<String> fetchData() async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:5000/data'));
+
+    if (response.statusCode == 200) {
+      // Parse the response as JSON
+      var data = jsonDecode(response.body);
+      return data['message']; // Assuming the response is like: {"message": "Hello from Python!"}
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////
+pip install flask-cors
+
+If you're deploying your Flask app and Flutter app separately, you may face CORS (Cross-Origin Resource Sharing) issues when your Flutter app (frontend) tries to access the backend.
+
+To handle CORS in Flask, install the Flask-CORS package:
+
+////////////////////////////////////////////////////////////////////////
+from flask import Flask, jsonify
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)  # This will allow all domains to access your API
+
+@app.route('/data', methods=['GET'])
+def get_data():
+    data = {"message": "Hello from Python!"}
+    return jsonify(data)
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
