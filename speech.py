@@ -12,7 +12,7 @@ def AI(data):
 
 
     print("input data",data)
-    genai.configure(api_key="AIzaSyDR8h-0OR_zgHqO_ZunKzxjV-WdRyoQHZY")
+    genai.configure(api_key="PAISE-BHAR-KE-LE-apiKEY")
     # texts =f"AI response for prompt::\n {prompt} \n**************************\n\n"
 
     # Create the model
