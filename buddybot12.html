@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* Body Background */
+        body {
+            background: linear-gradient(135deg, #6e5bef, #7a45e5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Glass Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Hover Effect */
+        .glass:hover {
+            transform: scale(1.05);
+        }
+
+        /* Title */
+        .glass h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        /* Paragraph */
+        .glass p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        /* Button */
+        .button {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 12px 24px;
+            border-radius: 30px;
+            color: white;
+            font-weight: bold;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: absolute;
+            top: 20px;
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 1200px;
+            padding: 15px 30px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 0 15px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">
+            <i class="fas fa-robot"></i> <strong>BuddyBot</strong>
+        </div>
+        <div class="nav-links">
+            <a href="#">Features</a>
+            <a href="#">Testimonials</a>
+            <a href="#">Download</a>
+        </div>
+    </div>
+
+    <!-- Glassmorphism Section -->
+    <div class="glass">
+        <h1>Your AI Companion for Every Conversation</h1>
+        <p>Experience the future of AI communication with BuddyBot's natural, intelligent, and secure chat platform.</p>
+        <button class="button">Get Started Free →</button>
+    </div>
+
+    <!-- Smooth Hover Effect Library -->
+    <script src="https://cdn.jsdelivr.net/gh/akzhy/MagicMouse.js/dist/magicmouse.min.js"></script>
+    <script>
+        magicMouse({
+            "cursorOuter": "circle-basic",
+            "hoverEffect": "pointer-blur",
+            "hoverItemMove": false
+        });
+    </script>
+
+</body>
+</html>
